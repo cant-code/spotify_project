@@ -25,4 +25,42 @@ body {
 #display {
     background: #e9ecef;
     border-radius: .3rem;
+    margin-top: 5rem;
+}
+
+#jumbo {
+    margin-top: 5rem;
+}
+
+@media (max-width: 990px) {
+    .display-3 {
+        font-size: 3.8rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .display-3 {
+        font-size: 2.8rem !important;
+    }
+}
+
+@media (max-width: 519px) {
+    .display-3 {
+        font-size: 2.5rem !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .display-4 {
+        font-size: 3.0rem !important;
+    }
+}
+
+@media (max-width: 522px) {
+    .display-4 {
+        font-size: 2.8rem !important;
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
 }

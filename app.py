@@ -16,6 +16,12 @@ sess.init_app(app)
 @app.route('/')
 def hello_world():
     session.permanent = True
+    if 'limit' in session:
+        del session['limit']
+    if 'username' in session:
+        del session['username']
+    if 'term' in session:
+        del session['term']
     title = 'Homepage'
     return render_template("index.html", title=title)
 
@@ -28,9 +34,6 @@ def display():
                            size=session.get('limit'))
     else:
         data = st.get_data(session.get('token'), session.get('username'), session.get('term'))
-    if 'limit' in session:
-        del session['limit']
-    del session['token']
     if data is None:
         return "Empty"
     return render_template("display.html", data=data)
@@ -44,9 +47,6 @@ def artists():
                               size=session.get('limit'))
     else:
         data = st.get_artists(session.get('token'), session.get('username'), session.get('term'))
-    if 'limit' in session:
-        del session['limit']
-    del session['token']
     if data is None:
         return "Empty"
     return render_template("artists.html", data=data)
