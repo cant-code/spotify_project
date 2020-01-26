@@ -10,10 +10,6 @@ spotipy_redirect_uri = os.environ.get('spotipy_redirect_uri')
 def get_token(user):
     username = user
     scope = 'user-top-read'
-    print(os.environ.get('spotipy_client_secret'))
-    print(spotipy_client_id)
-    print(spotipy_client_secret)
-    print(spotipy_redirect_uri)
     token = prompt_for_user_token(username, scope, client_id=spotipy_client_id,
                                   client_secret=spotipy_client_secret,
                                   redirect_uri=spotipy_redirect_uri)
