@@ -1,0 +1,52 @@
+{% include 'header.html' %}
+<div class="container" id="display">
+    <div class="row mb-5">
+        <div class="col">
+            <h1 class="display-4 text-center">Hello {{ data[0].get('display_name') }}</h1>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <h3 class="h-auto"></h3>
+        </div>
+        <div class="col-2">
+            <h3 class="h-auto">Name</h3>
+        </div>
+        <div class="col-2">
+            <h3 class="h-auto">Artists</h3>
+        </div>
+        <div class="col-2">
+            <h3 class="h-auto">Time</h3>
+        </div>
+        <div class="col-3">
+            <h3 class="h-auto">Link</h3>
+        </div>
+    </div>
+    <hr class="my-4">
+    {% for i in data[1:] %}
+        {% for j in i.get('items') %}
+            <div class="row mb-3">
+                <div class="col-3">
+                    <img src="{{ j.get('album').get('images')[0].get('url') }}" class="img-fluid">
+                </div>
+                <div class="col-2">
+                    {{ j.get('name') }}
+                </div>
+                <div class="col-2">{% for z in j.get('artists') %}
+                    <div>{{ z.get('name') }}</div>{% endfor %}
+                </div>
+                <div class="col-2" id="{{loop.index}}">
+                    <script type="text/javascript">
+                        convertMS({{j.get('duration_ms')}}, {{loop.index}})
+                    </script>
+                </div>
+                <div class="col-3">
+                    <a href="{{ j.get('external_urls').get('spotify') }}"
+                       target="_blank" class="mw-100">Spotify Link</a>
+                </div>
+            </div>
+            <hr class="my-4">
+        {% endfor %}
+    {% endfor %}
+</div>
+{% include 'footer.html' %}

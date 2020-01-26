@@ -1,0 +1,28 @@
+body {
+    background: #2BC0E4; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #EAECC6, #2BC0E4); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #EAECC6, #2BC0E4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-repeat: no-repeat;
+    height: 100%;
+    background-attachment: fixed;
+}
+
+#bar {
+    font-size: 1.6em;
+    font-weight: 100;
+    background: black;
+}
+
+#bar .nav-link:hover {
+    color: #1ed760;
+}
+
+#brand {
+    font-size: 1.6em;
+    color: white;
+}
+
+#display {
+    background: #e9ecef;
+    border-radius: .3rem;
+}

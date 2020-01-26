@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+<div class="container">
+    <div class="jumbotron" id="jumbo">
+        <h1 class="display-3">Get your Spotify Details</h1>
+        <p class="lead">If you dont know what your username is then go to: <a
+                href="https://www.spotify.com/account/overview/" target="_blank">Spotify</a></p>
+        <hr class="my-4">
+        <form action="/" method="post">
+            <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="custom-select mb-2" name="search" required>
+                        <option value="tracks">Top Tracks</option>
+                        <option value="artists">Top Artists</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="custom-select mb-2" name="term" required>
+                        <option value="short_term">Short Term</option>
+                        <option value="medium_term">Medium Term</option>
+                        <option value="long_term">Long Term</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="number" max="50" class="form-control" placeholder="No. of items to list" name="limit">
+                    <small id="limitHelp" class="form-text text-muted">Optional Field (Max Limit is 50)</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% include 'footer.html' %}
