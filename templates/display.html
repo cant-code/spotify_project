@@ -1,52 +1,65 @@
 {% include 'header.html' %}
-<div class="container" id="display">
-    <div class="row mb-5">
+<div class="container bg-dark" id="display">
+    <div class="row">
         <div class="col">
-            <h1 class="display-4 text-center">Hello {{ data[0].get('display_name') }}</h1>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-3">
-            <h3 class="h-auto"></h3>
-        </div>
-        <div class="col-2">
-            <h3 class="h-auto">Name</h3>
-        </div>
-        <div class="col-2">
-            <h3 class="h-auto">Artists</h3>
-        </div>
-        <div class="col-2">
-            <h3 class="h-auto">Time</h3>
-        </div>
-        <div class="col-3">
-            <h3 class="h-auto">Link</h3>
+            <h1 class="pt-2 display-4 text-white text-center">Hello {{ data[0].get('display_name') }}</h1>
         </div>
     </div>
     <hr class="my-4">
     {% for i in data[1:] %}
-        {% for j in i.get('items') %}
-            <div class="row mb-3">
-                <div class="col-3">
-                    <img src="{{ j.get('album').get('images')[0].get('url') }}" class="img-fluid">
+        <div class="row justify-content-center">
+            {% for j in i.get('items') %}
+                <div class="col-lg-4 col-md-6 col-12 mb-4 images">
+                    <div class="card songlist border-light" data-toggle="modal" data-target="#exampleModal"
+                         id="{{ j.get('id') }}">
+                        <img src="{{ j.get('album').get('images')[0].get('url') }}" class="card-img img-fluid">
+                        <div class="card-img-overlay d-flex">
+                            <h5 class="card-title text-white align-self-center mx-auto">{{ j.get('name') }}</h5>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-2">
-                    {{ j.get('name') }}
-                </div>
-                <div class="col-2">{% for z in j.get('artists') %}
-                    <div>{{ z.get('name') }}</div>{% endfor %}
-                </div>
-                <div class="col-2" id="{{loop.index}}">
-                    <script type="text/javascript">
-                        convertMS({{j.get('duration_ms')}}, {{loop.index}})
-                    </script>
-                </div>
-                <div class="col-3">
-                    <a href="{{ j.get('external_urls').get('spotify') }}"
-                       target="_blank" class="mw-100">Spotify Link</a>
-                </div>
-            </div>
-            <hr class="my-4">
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% endfor %}
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h2 class="modal-title" id="songName"></h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body contentbharbc">
+                <div class="card mb-3 bg-dark text-white" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="" class="card-img img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="card-text h3" id="artists"></div>
+                                <div class="card-text h3" id="Length"></div>
+                                <div class="card-text h3" id="link"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="loading" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog text-center modal-dialog-centered" role="document">
+        <div class="modal-body">
+            <div class="spinner-grow text-dark" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-dark bg-dark gotoTop" role="button"><i class="fas fa-arrow-up"></i></button>
 {% include 'footer.html' %}

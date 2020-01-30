@@ -34,6 +34,7 @@ def display():
                            size=session.get('limit'))
     else:
         data = st.get_data(session.get('token'), session.get('username'), session.get('term'))
+    session['data'] = data
     if data is None:
         return "Empty"
     return render_template("display.html", data=data)
@@ -83,6 +84,25 @@ def auth():
         return redirect(url_for('display'))
     else:
         return redirect(url_for('artists'))
+
+
+@app.route('/hmm', methods=['POST'])
+def hmm():
+    song_id = request.values.get('id')
+    data2 = session.get('data')
+    song = []
+    artist = []
+    for i in data2[1:]:
+        for j in i.get('items'):
+            if song_id == j.get('id'):
+                song.append(j.get('name'))
+                song.append(j.get('album').get('images')[0].get('url'))
+                for k in j.get('artists'):
+                    artist.append(k.get('name'))
+                song.append(artist)
+                song.append(j.get('duration_ms'))
+                song.append(j.get('external_urls').get('spotify'))
+    return jsonify(song)
 
 
 if __name__ == '__main__':
