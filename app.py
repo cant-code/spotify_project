@@ -22,6 +22,8 @@ def hello_world():
         del session['username']
     if 'term' in session:
         del session['term']
+    if 'data' in session:
+        del session['data']
     title = 'Homepage'
     return render_template("index.html", title=title)
 
@@ -48,6 +50,7 @@ def artists():
                               size=session.get('limit'))
     else:
         data = st.get_artists(session.get('token'), session.get('username'), session.get('term'))
+    session['data'] = data
     if data is None:
         return "Empty"
     return render_template("artists.html", data=data)
@@ -103,6 +106,22 @@ def hmm():
                 song.append(j.get('duration_ms'))
                 song.append(j.get('external_urls').get('spotify'))
     return jsonify(song)
+
+
+@app.route('/foo', methods=['POST'])
+def foo():
+    artist_id = request.values.get('id')
+    data2 = session.get('data')
+    artist2 = []
+    for i in data2[1:]:
+        for j in i.get('items'):
+            if artist_id == j.get('id'):
+                artist2.append(j.get('name'))
+                artist2.append(j.get('images')[0].get('url'))
+                artist2.append(j.get('popularity'))
+                artist2.append(j.get('followers').get('total'))
+                artist2.append(j.get('external_urls').get('spotify'))
+    return jsonify(artist2)
 
 
 if __name__ == '__main__':

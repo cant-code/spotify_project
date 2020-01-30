@@ -26,7 +26,6 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $(".songlist").click(function () {
-        console.log(this.id)
         $.ajax({
             type: 'POST',
             data: {"id": this.id},
@@ -38,11 +37,33 @@ $(document).ready(function () {
                 $('#loading').hide();
             },
             success: function (data) {
-                console.log(data);
                 $('.contentbharbc div div div img').attr("src", data[1]);
                 $('#songName').text(data[0]);
                 $('#artists').text('Artists: ' + artists(data[2]));
                 $('#Length').text('Length: ' + convertMS(data[3]));
+                $('#link').html("<a href=\"" + data[4] + "\" target=\"_blank\">Spotify Link</a>");
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $(".artistlist").click(function () {
+        $.ajax({
+            type: 'POST',
+            data: {"id": this.id},
+            url: '/foo',
+            beforeSend: function () {
+                $('#loading').show();
+            },
+            complete: function () {
+                $('#loading').hide();
+            },
+            success: function (data) {
+                $('.contentbharbc div div div img').attr("src", data[1]);
+                $('#artistName').text(data[0]);
+                $('#popularity').text('Popularity: ' + data[2]);
+                $('#followers').text('Followers: ' + data[3]);
                 $('#link').html("<a href=\"" + data[4] + "\" target=\"_blank\">Spotify Link</a>");
             }
         });
