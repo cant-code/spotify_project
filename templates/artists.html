@@ -5,7 +5,7 @@
             <h1 class="pt-2 display-4 text-white text-center">Hello {{ data[0].get('display_name') }}</h1>
         </div>
     </div>
-    <hr class="my-4">
+    <hr class="my-4 bg-white">
     {% for i in data[1:] %}
         <div class="row justify-content-center">
             {% for j in i.get('items') %}
@@ -42,7 +42,7 @@
                             <div class="card-body">
                                 <div class="card-text h3" id="popularity"></div>
                                 <div class="card-text h3" id="followers"></div>
-                                <div class="card-text h3" id="link"></div>
+                                <div class="card-text h3" id="link2"></div>
                             </div>
                         </div>
                     </div>

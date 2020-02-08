@@ -1,0 +1,243 @@
+{% include 'header.html' %}
+<div class="container bg-dark" id="display">
+    <div class="row">
+        <div class="col">
+            <h1 class="pt-2 display-4 text-white text-center">Hello {{ data[0].get('display_name') }}</h1>
+        </div>
+    </div>
+    <hr class="my-4 bg-white">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        {% if 'tracks' in data[1] %}
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-tracks-tab" data-toggle="pill" href="#pills-tracks" role="tab"
+                   aria-controls="pills-tracks" aria-selected="true">Tracks</a>
+            </li>
+        {% endif %}
+        {% if 'artists' in data[1] %}
+            <li class="nav-item">
+                <a class="nav-link" id="pills-artists-tab" data-toggle="pill" href="#pills-artists" role="tab"
+                   aria-controls="pills-artists" aria-selected="false">Artists</a>
+            </li>
+        {% endif %}
+        {% if 'playlists' in data[1] %}
+            <li class="nav-item">
+                <a class="nav-link" id="pills-playlists-tab" data-toggle="pill" href="#pills-playlists" role="tab"
+                   aria-controls="pills-playlists" aria-selected="false">Playlists</a>
+            </li>
+        {% endif %}
+        {% if 'albums' in data[1] %}
+            <li class="nav-item">
+                <a class="nav-link" id="pills-albums-tab" data-toggle="pill" href="#pills-albums" role="tab"
+                   aria-controls="pills-albums" aria-selected="false">Albums</a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        {% if 'tracks' in data[1] %}
+            <div class="tab-pane fade show active" id="pills-tracks" role="tabpanel" aria-labelledby="pills-tracks-tab">
+                <div class="row justify-content-center">
+                    {% for j in data[1].get('tracks').get('items') %}
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 images">
+                            <div class="card songlist songclick border-light" data-toggle="modal"
+                                 data-target="#exampleModal" id="{{ j.get('id') }}">
+                                <img src="{{ j.get('album').get('images')[0].get('url') }}" class="card-img img-fluid">
+                                <div class="card-img-overlay d-flex">
+                                    <h5 class="card-title text-white align-self-center mx-auto">{{ j.get('name') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if 'artists' in data[1] %}
+            <div class="tab-pane fade" id="pills-artists" role="tabpanel" aria-labelledby="pills-artists-tab">
+                <div class="row justify-content-center">
+                    {% for j in data[1].get('artists').get('items') %}
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 images">
+                            <div class="card artistlist border-light" data-toggle="modal" data-target="#exampleModal2"
+                                 id="{{ j.get('id') }}">
+                                <img src="{{ j.get('images')[0].get('url') }}" class="card-img img-fluid">
+                                <div class="card-img-overlay d-flex">
+                                    <h5 class="card-title text-white align-self-center mx-auto">{{ j.get('name') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if 'playlists' in data[1] %}
+            <div class="tab-pane fade" id="pills-playlists" role="tabpanel" aria-labelledby="pills-playlists-tab">
+                <div class="row justify-content-center">
+                    {% for j in data[1].get('playlists').get('items') %}
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 images">
+                            <div class="card songlist playlist border-light" data-toggle="modal" data-target="#exampleModal3"
+                                 id="{{ j.get('id') }}">
+                                <img src="{{ j.get('images')[0].get('url') }}" class="card-img img-fluid">
+                                <div class="card-img-overlay d-flex">
+                                    <h5 class="card-title text-white align-self-center mx-auto">{{ j.get('name') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if 'albums' in data[1] %}
+            <div class="tab-pane fade" id="pills-albums" role="tabpanel" aria-labelledby="pills-albums-tab">
+                <div class="row justify-content-center">
+                    {% for j in data[1].get('albums').get('items') %}
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 images">
+                            <div class="card songlist albums border-light" data-toggle="modal" data-target="#exampleModal4"
+                                 id="{{ j.get('id') }}">
+                                <img src="{{ j.get('images')[0].get('url') }}" class="card-img img-fluid">
+                                <div class="card-img-overlay d-flex">
+                                    <h5 class="card-title text-white align-self-center mx-auto">{{ j.get('name') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% if 'tracks' in data[1] %}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h2 class="modal-title" id="songName"></h2>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body contentbharbc">
+                <div class="card mb-3 bg-dark text-white" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="" class="card-img img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="card-text h3" id="artists"></div>
+                                <div class="card-text h3" id="Length"></div>
+                                <div class="card-text h3" id="link"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if 'artists' in data[1] %}
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h2 class="modal-title" id="artistName"></h2>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body contentbharbc">
+                <div class="card mb-3 bg-dark text-white" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="" class="card-img img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="card-text h3" id="popularity"></div>
+                                <div class="card-text h3" id="followers"></div>
+                                <div class="card-text h3" id="link2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if 'playlists' in data[1] %}
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h2 class="modal-title" id="playlistName"></h2>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body contentbharbc">
+                <div class="card mb-3 bg-dark text-white" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="" class="card-img img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="card-text h3" id="description"></div>
+                                <div class="card-text h3" id="owner"></div>
+                                <div class="card-text h3" id="tracks"></div>
+                                <div class="card-text h3" id="link3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if 'albums' in data[1] %}
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h2 class="modal-title" id="albumName"></h2>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body contentbharbc">
+                <div class="card mb-3 bg-dark text-white" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="" class="card-img img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="card-text h3" id="artists2"></div>
+                                <div class="card-text h3" id="tracks2"></div>
+                                <div class="card-text h3" id="date"></div>
+                                <div class="card-text h3" id="link4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="modal" id="loading" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog text-center modal-dialog-centered" role="document">
+        <div class="modal-body">
+            <div class="spinner-grow text-dark" role="status" style="width: 6rem; height: 6rem;">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-dark bg-dark gotoTop" role="button"><i class="fas fa-arrow-up"></i></button>
+{% include 'footer.html' %}

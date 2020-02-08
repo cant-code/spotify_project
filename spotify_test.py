@@ -16,17 +16,26 @@ def get_token(user):
     return token
 
 
-def get_data(token, username, term, size):
+def get_data(token, username, term, size, search_type):
     if token:
         token2 = token['token']
         sp = spotipy.Spotify(auth=token2)
         sp.trace = False
+        # print(sp.recommendations(seed_artists=['1vCWHaC5f2uS3yhpwWbIA6'], seed_tracks=['322tcqPhma7F6hfCeLisx0']))
+        # print(sp._get('search', q='Radiohead', limit=20, offset=0, type='track,album', market=None))
         result = []
-        results2 = sp.user(username)
-        result.append(results2)
+        results = None
+        try:
+            results2 = sp.user(username)
+            result.append(results2)
+        except spotipy.SpotifyException:
+            return 404
         if size is None:
             size = 5
-        results = sp.current_user_top_tracks(time_range=term, limit=size)
+        if search_type is "Track":
+            results = sp.current_user_top_tracks(time_range=term, limit=size)
+        if search_type is "Artist":
+            results = sp.current_user_top_artists(time_range=term, limit=size)
         result.append(results)
         return result
     else:
@@ -60,15 +69,17 @@ def authenticate(sp_oauth, response):
         return None
 
 
-def get_artists(token, username, term, size):
+def search(token, username, query, limit, types):
     token2 = token['token']
     sp = spotipy.Spotify(auth=token2)
     sp.trace = False
     result = []
-    results2 = sp.user(username)
-    result.append(results2)
-    if size is None:
-        size = 5
-    results = sp.current_user_top_artists(time_range=term, limit=size)
-    result.append(results)
+    try:
+        results2 = sp.user(username)
+        result.append(results2)
+    except spotipy.SpotifyException:
+        return 404
+    string = types[0]
+    string = ','.join(types)
+    result.append(sp._get('search', q=query, limit=limit, offset=0, type=string, market=None))
     return result

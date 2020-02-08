@@ -5,12 +5,12 @@
             <h1 class="pt-2 display-4 text-white text-center">Hello {{ data[0].get('display_name') }}</h1>
         </div>
     </div>
-    <hr class="my-4">
+    <hr class="my-4 bg-white">
     {% for i in data[1:] %}
         <div class="row justify-content-center">
             {% for j in i.get('items') %}
                 <div class="col-lg-4 col-md-6 col-12 mb-4 images">
-                    <div class="card songlist border-light" data-toggle="modal" data-target="#exampleModal"
+                    <div class="card songlist songclick border-light" data-toggle="modal" data-target="#exampleModal"
                          id="{{ j.get('id') }}">
                         <img src="{{ j.get('album').get('images')[0].get('url') }}" class="card-img img-fluid">
                         <div class="card-img-overlay d-flex">
