@@ -2,4 +2,4 @@ Flask
 Flask-Session
 Spotipy
 uwsgi
-werkzeug
+werkzeug==0.16.0
