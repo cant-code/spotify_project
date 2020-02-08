@@ -13,6 +13,14 @@ sess = Session()
 sess.init_app(app)
 
 
+@app.route('/')
+def hello_world():
+    session.permanent = True
+    clear_data()
+    title = 'Homepage'
+    return render_template("index.html", title=title)
+
+
 def clear_data():
     if 'limit' in session:
         del session['limit']
@@ -28,14 +36,6 @@ def clear_data():
         del session['query']
     if 'search' in session:
         del session['search']
-
-
-@app.route('/')
-def hello_world():
-    session.permanent = True
-    clear_data()
-    title = 'Homepage'
-    return render_template("index.html", title=title)
 
 
 @app.route('/tracks/')
