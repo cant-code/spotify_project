@@ -21,23 +21,6 @@ def hello_world():
     return render_template("index.html", title=title)
 
 
-def clear_data():
-    if 'limit' in session:
-        del session['limit']
-    if 'username' in session:
-        del session['username']
-    if 'term' in session:
-        del session['term']
-    if 'data' in session:
-        del session['data']
-    if 'criteria' in session:
-        del session['criteria']
-    if 'query' in session:
-        del session['query']
-    if 'search' in session:
-        del session['search']
-
-
 @app.route('/tracks/')
 def display():
     title = 'Tracks'
@@ -122,19 +105,6 @@ def hmm():
         return jsonify(song)
 
 
-def search_song(j):
-    song = []
-    artist = []
-    song.append(j.get('name'))
-    song.append(j.get('album').get('images')[0].get('url'))
-    for k in j.get('artists'):
-        artist.append(k.get('name'))
-    song.append(artist)
-    song.append(j.get('duration_ms'))
-    song.append(j.get('external_urls').get('spotify'))
-    return song
-
-
 @app.route('/foo', methods=['POST'])
 def foo():
     artist_id = request.values.get('id')
@@ -188,12 +158,6 @@ def play():
     return jsonify(album)
 
 
-def search_artist(j):
-    artist2 = [j.get('name'), j.get('images')[0].get('url'), j.get('popularity'), j.get('followers').get('total'),
-               j.get('external_urls').get('spotify')]
-    return artist2
-
-
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     title = 'Search Page'
@@ -231,3 +195,39 @@ def result():
 
 if __name__ == '__main__':
     app.run()
+
+
+def clear_data():
+    if 'limit' in session:
+        del session['limit']
+    if 'username' in session:
+        del session['username']
+    if 'term' in session:
+        del session['term']
+    if 'data' in session:
+        del session['data']
+    if 'criteria' in session:
+        del session['criteria']
+    if 'query' in session:
+        del session['query']
+    if 'search' in session:
+        del session['search']
+
+
+def search_artist(j):
+    artist2 = [j.get('name'), j.get('images')[0].get('url'), j.get('popularity'), j.get('followers').get('total'),
+               j.get('external_urls').get('spotify')]
+    return artist2
+
+
+def search_song(j):
+    song = []
+    artist = []
+    song.append(j.get('name'))
+    song.append(j.get('album').get('images')[0].get('url'))
+    for k in j.get('artists'):
+        artist.append(k.get('name'))
+    song.append(artist)
+    song.append(j.get('duration_ms'))
+    song.append(j.get('external_urls').get('spotify'))
+    return song
