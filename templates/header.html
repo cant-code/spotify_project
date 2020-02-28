@@ -25,6 +25,61 @@
                     <a class="nav-link" href="/search">Search</a>
                 </li>
             </ul>
+            <button type="button" id="getList" class="btn text-white cart" data-toggle="modal" data-target="#Modal"><i
+                    class="fas fa-play fa-2x"></i></button>
         </div>
     </div>
 </nav>
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h3 class="modal-title" id="getRecommendation">Get Recommendations</h3>
+                <button type="button" id="close" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card mb-3 bg-dark text-white recom" style="max-width: 800px;">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="p-tracks-tab" data-toggle="pill" href="#p-tracks"
+                                   role="tab"
+                                   aria-controls="p-tracks" aria-selected="true">Tracks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="p-artists-tab" data-toggle="pill" href="#p-artists"
+                                   role="tab"
+                                   aria-controls="p-artists" aria-selected="false">Artists</a>
+                            </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="p-tracks" role="tabpanel"
+                             aria-labelledby="p-tracks-tab">
+                        </div>
+                        <div class="tab-pane fade" id="p-artists" role="tabpanel"
+                             aria-labelledby="p-artists-tab">
+                        </div>
+                    </div>
+                </div>
+                <a data-toggle="collapse" href="#collapseExample" role="button" class="text-white"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Advanced Settings <span><i class="fas fa-angle-down"></i></span>
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body text-dark">
+                        <div class="col">
+                            <input type="number" id="limit" max="100" class="form-control" placeholder="No. of items to list"
+                                   name="limit">
+                            <small id="limitHelp" class="form-text text-muted">Optional Field (Max Limit is 50)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href='/getrecom' role="button" class="btn btn-success text-white recom-btn hide target">Search</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,12 +6,11 @@
         </div>
     </div>
     <hr class="my-4 bg-white">
-    {% for i in data[1:] %}
         <div class="row justify-content-center">
-            {% for j in i.get('items') %}
+            {% for j in data[1].get('tracks') %}
                 <div class="col-lg-4 col-md-6 col-12 mb-4 images">
-                    <div class="card songlist songclick border-light" data-toggle="modal" data-target="#exampleModal"
-                         id="{{ j.get('id') }}">
+                    <div class="card songlist songclick border-light" data-toggle="modal"
+                         data-target="#exampleModal" id="{{ j.get('id') }}">
                         <img src="{{ j.get('album').get('images')[0].get('url') }}" class="card-img img-fluid">
                         <div class="card-img-overlay d-flex">
                             <h5 class="card-title text-white align-self-center mx-auto">{{ j.get('name') }}</h5>
@@ -20,12 +19,11 @@
                 </div>
             {% endfor %}
         </div>
-    {% endfor %}
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content bg-dark text-white modalDisplay">
+        <div class="modal-content bg-dark text-white">
             <div class="modal-header">
                 <h2 class="modal-title" id="songName"></h2>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">

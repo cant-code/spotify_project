@@ -17,6 +17,9 @@ sess.init_app(app)
 def hello_world():
     session.permanent = True
     clear_data()
+    if 'recommendation' not in session:
+        session['recommendation'] = []
+        session['count'] = 0
     title = 'Homepage'
     return render_template("index.html", title=title)
 
@@ -90,8 +93,15 @@ def auth():
 @app.route('/hmm', methods=['POST'])
 def hmm():
     song_id = request.values.get('id')
+    recom = request.values.get('recom')
     data2 = session.get('data')
     song = None
+    if recom == 'true':
+        for i in data2[1:]:
+            for j in i.get('tracks'):
+                if song_id == j.get('id'):
+                    song = search_song(j)
+        return jsonify(song)
     if session.get('search') == 'tracks':
         for i in data2[1:]:
             for j in i.get('items'):
@@ -162,7 +172,6 @@ def play():
 def search():
     title = 'Search Page'
     if request.method == 'POST':
-        title = 'Search Result'
         session['username'] = request.form['username']
         session['criteria'] = request.form.getlist('criteria')
         session['query'] = request.form['query']
@@ -193,6 +202,57 @@ def result():
     return render_template("search_result.html", title=title, data=data)
 
 
+@app.route('/list')
+def recom_list():
+    if 'recom' not in session:
+        session['recom']= 'true'
+    data_id = request.values.get('id')
+    data_type = request.values.get('type')
+    query = request.values.get('query')
+    if query == 'add':
+        if session['count'] < 5:
+            for i in session['recommendation']:
+                if i.get('d_id') == data_id:
+                    return jsonify(404)
+            src = request.values.get('src')
+            name = request.values.get('name')
+            data = {'d_id': data_id, 'd_src': src, 'd_name': name, 'type': data_type}
+            session['count'] += 1
+            session['recommendation'].append(data)
+            return jsonify({'success': True})
+        else:
+            return jsonify(404)
+    else:
+        for i in session['recommendation']:
+            if i.get('d_id') == data_id:
+                session['recommendation'].remove(i)
+                session['count'] -= 1
+                return jsonify({'success': True})
+
+
+@app.route('/data')
+def data():
+    return jsonify(session['recommendation'])
+
+
+@app.route('/getrecom')
+def get_recom():
+    title = 'Recommendations'
+    limit = request.values.get('limit')
+    if limit is None:
+        limit = 5
+    data = st.recommendations(session.get('token'), session.get('username'), session.get('recommendation'), limit)
+    if data == 404:
+        return render_template('error.html', title='Error', error='User Not Found')
+    session['data'] = data
+    del session['recommendation']
+    del session['recom']
+    if 'recommendation' not in session:
+        session['recommendation'] = []
+        session['count'] = 0
+    return render_template("recresults.html", title=title, data=data)
+
+
 if __name__ == '__main__':
     app.run()
 
@@ -200,8 +260,6 @@ if __name__ == '__main__':
 def clear_data():
     if 'limit' in session:
         del session['limit']
-    if 'username' in session:
-        del session['username']
     if 'term' in session:
         del session['term']
     if 'data' in session:

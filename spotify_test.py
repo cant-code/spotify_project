@@ -83,3 +83,24 @@ def search(token, username, query, limit, types):
     string = ','.join(types)
     result.append(sp._get('search', q=query, limit=limit, offset=0, type=string, market=None))
     return result
+
+
+def recommendations(token, username, data, limit):
+    token2 = token['token']
+    sp = spotipy.Spotify(auth=token2)
+    sp.trace = False
+    result = []
+    artists = []
+    tracks = []
+    for i in data:
+        if i.get('type') == 'tracks':
+            tracks.append(i.get('d_id'))
+        else:
+            artists.append(i.get('d_id'))
+    try:
+        results2 = sp.user(username)
+        result.append(results2)
+    except spotipy.SpotifyException:
+        return 404
+    result.append(sp.recommendations(seed_artists=artists, seed_tracks=tracks, limit=limit))
+    return result

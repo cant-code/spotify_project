@@ -25,7 +25,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content bg-dark text-white">
+        <div class="modal-content bg-dark text-white modalDisplay">
             <div class="modal-header">
                 <h2 class="modal-title" id="artistName"></h2>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -43,6 +43,22 @@
                                 <div class="card-text h3" id="popularity"></div>
                                 <div class="card-text h3" id="followers"></div>
                                 <div class="card-text h3" id="link2"></div>
+                                <div class="toast ml-auto hide bg-success text-primary successful" role="alert" aria-live="assertive" aria-atomic="true"
+                                     data-delay=700>
+                                    <div class="toast-body">
+                                        Song Added Successfully
+                                    </div>
+                                </div>
+                                <div class="toast ml-auto hide bg-danger text-primary failure" role="alert" aria-live="assertive" aria-atomic="true"
+                                     data-delay=700>
+                                    <div class="toast-body">
+                                        Already added or list full
+                                    </div>
+                                </div>
+                                <div class="card-text text-right">
+                                    <button type="button" class="btn text-white cart add-artist"><i
+                                            class="fas fa-plus-circle fa-2x"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>

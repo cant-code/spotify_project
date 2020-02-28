@@ -11,6 +11,12 @@ body {
     overflow: hidden;
 }
 
+.recom-btn {
+    background-color: #1ed760;
+    border-color: #1ed760;
+    border-radius: 1.5rem;
+}
+
 .songlist {
     width: 100%;
     height: 100%;
@@ -132,6 +138,10 @@ body {
 
 #jumbo {
     margin-top: 5rem;
+}
+
+.cart:hover {
+    color: #1ed760!important;
 }
 
 @media (max-width: 990px) {
