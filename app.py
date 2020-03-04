@@ -171,6 +171,9 @@ def play():
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     title = 'Search Page'
+    if 'recommendation' not in session:
+        session['recommendation'] = []
+        session['count'] = 0
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['criteria'] = request.form.getlist('criteria')
@@ -187,7 +190,6 @@ def search():
         else:
             session['auth'] = new_data
             return redirect(session.get("auth").get("auth_url"))
-    clear_data()
     return render_template("search.html", title=title)
 
 
